@@ -13,11 +13,6 @@ public class GameOver : MonoBehaviour
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
 
-    public void Menu1()
-    {
-
-    }
-
     public void Quit1()
     {
         Application.Quit();

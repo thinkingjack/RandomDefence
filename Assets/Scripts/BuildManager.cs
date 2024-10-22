@@ -34,7 +34,6 @@ public class BuildManager : MonoBehaviour
 
         if (turretToBuild == null)
         {
-            Debug.Log("No turret selected to build");
             return;
         }
 
@@ -44,7 +43,7 @@ public class BuildManager : MonoBehaviour
 
         if (PlayerStats.Money < installCost)
         {
-            Debug.Log("Not enough money");
+            Debug.Log("돈이 부족합니다");
             return;
         }
 
@@ -64,7 +63,6 @@ public class BuildManager : MonoBehaviour
         GameObject effect = Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 0.6f);
 
-        Debug.Log("Turret built. Money left: " + PlayerStats.Money);
 
         turretToBuild = null; // 타워를 생성한 후 선택된 타워 블루프린트를 초기화
 
@@ -117,7 +115,6 @@ public class BuildManager : MonoBehaviour
         turretToBuild = null;
         isCombining = false;
         isSelling = false;
-        Debug.Log("Build mode cancelled");
 
         // 버튼을 다시 활성화하도록 Shop에 알림
         if (Shop.instance != null)
@@ -138,7 +135,6 @@ public class BuildManager : MonoBehaviour
         Turret selectedTurret = node.turret.GetComponent<Turret>();
         if (selectedTurret == null)
         {
-            Debug.Log("Selected node does not have a valid turret");
             return;
         }
         // 선택된 터렛의 블루프린트를 가져옴
@@ -148,7 +144,6 @@ public class BuildManager : MonoBehaviour
         TurretBluePrint nextLevelBlueprint = TurretSetup.instance.GetRandomNextLevelTurret(selectedBlueprint.level);
         if (nextLevelBlueprint == null)
         {
-            Debug.Log("No next level turret found");
             return;
         }
 
@@ -168,7 +163,6 @@ public class BuildManager : MonoBehaviour
                     if (turret.blueprint.prefab.name == selectedBlueprint.prefab.name)
                     {
                         nodesWithSameBlueprint.Add(nodeWithTurret);
-                        Debug.Log("Found compatible turret on node: " + nodeWithTurret.name);
                     }
                 }
             }
@@ -176,7 +170,6 @@ public class BuildManager : MonoBehaviour
 
         if (nodesWithSameBlueprint.Count == 0)
         {
-            Debug.Log("No compatible turrets found for combination");
             return;
         }
 
@@ -207,7 +200,6 @@ public class BuildManager : MonoBehaviour
         GameObject effect = Instantiate(buildEffect, upgradePosition, Quaternion.identity);
         Destroy(effect, 0.6f);
 
-        Debug.Log("Turret upgraded to a new level turret: " + nextLevelBlueprint.prefab.name);
 
         // 합성 모드를 종료
         isCombining = false;
@@ -223,20 +215,17 @@ public class BuildManager : MonoBehaviour
     {
         if (!isSelling)
         {
-            Debug.Log("Not in selling mode");
             return;
         }
 
         if (node.turret == null)
         {
-            Debug.Log("No turret on this node to sell");
             return;
         }
 
         Turret turret = node.turret.GetComponent<Turret>();
         if (turret == null)
         {
-            Debug.Log("Selected node does not have a valid turret");
             return;
         }
 
@@ -262,7 +251,6 @@ public class BuildManager : MonoBehaviour
         GameObject effect = Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);
         Destroy(effect, 0.6f);
 
-        Debug.Log("Turret sold. Money now: " + PlayerStats.Money);
 
         // 판매 모드를 종료
         isSelling = false;
