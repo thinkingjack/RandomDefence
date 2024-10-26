@@ -469,7 +469,7 @@ MonoBehaviour:
   blueprint:
     prefab: {fileID: 1965688360123453324}
     cost: 30
-    sellPrice: 0
+    sellPrice: 30
     level: 1
 --- !u!65 &6280134246728009816
 BoxCollider:

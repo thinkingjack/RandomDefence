@@ -1804,7 +1804,7 @@ MonoBehaviour:
   firePoint: {fileID: 6925462085694338730}
   blueprint:
     prefab: {fileID: 7734932083412266000}
-    cost: 0
+    cost: 30
     sellPrice: 30
     level: 1
 --- !u!65 &6316989063332626429

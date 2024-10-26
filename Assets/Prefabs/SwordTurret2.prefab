@@ -1932,8 +1932,10 @@ MonoBehaviour:
   range: 5
   damage: 30
   isMelee: 1
+  isStunAttack: 1
+  stunDuration: 2
   bulletPrefab: {fileID: 0}
-  fireRate: 3
+  fireRate: 0.2
   useLaser: 0
   damageOverTime: 30
   slowValue: 0.5
