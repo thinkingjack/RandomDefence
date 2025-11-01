@@ -44,13 +44,15 @@ public class Shop : MonoBehaviour
 
     void Update()
     {
-        // ESC 키를 눌러서 버튼을 활성화
-        if (!isButtonActive && Input.GetKeyDown(KeyCode.Escape))
+        if (Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Escape))
         {
-            SetButtonsActive(true, false, false); // 버튼을 활성화하고 합성 모드 및 판매 모드를 비활성화
-            buildManager.CancelBuildMode(); // 빌드 모드 취소
-            ResetButtonColors(); // 모든 버튼의 색상을 기본 색상으로 초기화
-            ResetColorMultipliers(); // 모든 버튼의 ColorMultiplier를 초기화
+            if (!isButtonActive)
+            {
+                SetButtonsActive(true, false, false); // 버튼을 활성화하고 합성 모드 및 판매 모드를 비활성화
+                buildManager.CancelBuildMode(); // 빌드 모드 취소
+                ResetButtonColors(); // 모든 버튼의 색상을 기본 색상으로 초기화
+                ResetColorMultipliers(); // 모든 버튼의 ColorMultiplier를 초기화
+            }
         }
     }
 

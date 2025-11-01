@@ -6,9 +6,11 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
     public SceneFader sceneFader;
-    // Start is called before the first frame update
+
     public void Retry()
     {
+        GameManager.gameEnded = false; // 게임 상태 초기화
+        PlayerStats.Lives = 10;       // 목숨 초기화
         Time.timeScale = 1;
         sceneFader.FadeTo(SceneManager.GetActiveScene().name);
     }
