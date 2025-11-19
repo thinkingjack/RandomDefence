@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Shop : MonoBehaviour
 {
-    public List<TurretBluePrint> turretBlueprints; // 여러 타워 블루프린트를 관리할 리스트
+    public TurretDatabase turretDatabase; //ScriptableObject 참조
     public Button selectRandomButton; // 터렛 생성 버튼을 참조할 변수
     public Button combineButton; // 합성 버튼을 참조할 변수
     public Button sellButton; // 판매 버튼을 참조할 변수
@@ -44,18 +44,32 @@ public class Shop : MonoBehaviour
 
     void Update()
     {
-        if (Application.platform == RuntimePlatform.Android && Input.GetKeyDown(KeyCode.Escape))
+        // PC / Editor ESC
+        if (Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer)
         {
-            if (!isButtonActive)
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                SetButtonsActive(true, false, false); // 버튼을 활성화하고 합성 모드 및 판매 모드를 비활성화
-                buildManager.CancelBuildMode(); // 빌드 모드 취소
-                ResetButtonColors(); // 모든 버튼의 색상을 기본 색상으로 초기화
-                ResetColorMultipliers(); // 모든 버튼의 ColorMultiplier를 초기화
+                CancelMode();
+            }
+        }
+
+        // Android 뒤로가기 버튼
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                CancelMode();
             }
         }
     }
 
+    private void CancelMode()
+    {
+        buildManager.CancelBuildMode();           // 빌드/합성/판매 모드 취소
+        SetButtonsActive(true, false, false);     // 버튼 활성화 초기화
+        ResetButtonColors();
+        ResetColorMultipliers();
+    }
     // 버튼 클릭 시 호출되는 함수
     private void OnButtonClicked(Button clickedButton)
     {
@@ -83,13 +97,13 @@ public class Shop : MonoBehaviour
     // 랜덤 타워를 선택하고 건설하는 함수
     private void OnSelectRandomButtonClicked()
     {
-        TurretBluePrint randomTurret = GetRandomTurretBluePrint();
+        int desiredLevel = 1; // 원하는 레벨 설정
+        TurretBluePrint randomTurret = GetRandomTurretBluePrint(desiredLevel);
         if (randomTurret != null)
         {
             buildManager.SelectTurretToBuild(randomTurret);
-            Debug.Log("Random turret selected: " + randomTurret.prefab.name);
+            Debug.Log("Random turret selected: " + randomTurret.prefab.name + " at level " + randomTurret.level);
 
-            // 버튼 비활성화
             SetButtonsActive(false, isCombiningModeActive, isSellingModeActive);
         }
     }
@@ -113,20 +127,34 @@ public class Shop : MonoBehaviour
         // 버튼 비활성화
         SetButtonsActive(false, false, true);
     }
-
     // 랜덤 타워 블루프린트를 반환하는 함수
-    private TurretBluePrint GetRandomTurretBluePrint()
+    private TurretBluePrint GetRandomTurretBluePrint(int desiredLevel)
     {
-        if (turretBlueprints == null || turretBlueprints.Count == 0)
+        if (turretDatabase == null || turretDatabase.turretList.Count == 0)
         {
             Debug.LogWarning("No turret blueprints available!");
             return null;
         }
 
-        int randomIndex = Random.Range(0, turretBlueprints.Count);
-        return turretBlueprints[randomIndex];
-    }
+        // 원하는 레벨에 해당하는 블루프린트만 필터링
+        List<TurretBluePrint> levelFiltered = new List<TurretBluePrint>();
+        foreach (var bp in turretDatabase.turretList)
+        {
+            if (bp.level == desiredLevel)
+            {
+                levelFiltered.Add(bp);
+            }
+        }
 
+        if (levelFiltered.Count == 0)
+        {
+            Debug.LogWarning("No turret blueprints found for level: " + desiredLevel);
+            return null;
+        }
+
+        int randomIndex = Random.Range(0, levelFiltered.Count);
+        return levelFiltered[randomIndex];
+    }
     // 특정 버튼의 색상을 설정하는 함수
     private void SetButtonColor(Button button, Color color)
     {

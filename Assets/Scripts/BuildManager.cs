@@ -37,10 +37,10 @@ public class BuildManager : MonoBehaviour
             return;
         }
 
-        
-        // 선택한 블루프린트의 설치 비용을 가져옴
-        int installCost = turretToBuild.prefab.GetComponent<Turret>().InstallCost;
 
+        // 선택한 블루프린트의 설치 비용을 가져옴
+        //int installCost = turretToBuild.prefab.GetComponent<Turret>().InstallCost;
+        int installCost = turretToBuild.cost;
         if (PlayerStats.Money < installCost)
         {
             Debug.Log("돈이 부족합니다");
@@ -54,10 +54,12 @@ public class BuildManager : MonoBehaviour
 
         GameObject turret = Instantiate(turretToBuild.prefab, node.GetBuildPosition(), Quaternion.identity);
 
+        Turret turretComp = turret.GetComponent<Turret>();
+        turretComp.blueprint = turretToBuild; 
+
         turret.transform.SetParent(node.transform); // 터렛의 부모를 현재 노드로 설정
         node.turret = turret;
         node.isOccupied = true;
-
         builtTurrets.Add(turret);
 
         GameObject effect = Instantiate(buildEffect, node.GetBuildPosition(), Quaternion.identity);

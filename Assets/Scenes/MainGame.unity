@@ -4680,23 +4680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38b97d9face184942be9e2a315376e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretBluePrints:
-  - prefab: {fileID: 2327358423140830380, guid: ee79170ac45cd414481e4c1e2047ba8c, type: 3}
-    cost: 0
-    sellPrice: 0
-    level: 2
-  - prefab: {fileID: 3066425024380121613, guid: d9371d51e5c9ae7409e828432e05ece8, type: 3}
-    cost: 0
-    sellPrice: 0
-    level: 2
-  - prefab: {fileID: 7520365663378841035, guid: 9ac3a397ac0209f4a932a35c2ac25d16, type: 3}
-    cost: 0
-    sellPrice: 0
-    level: 2
-  - prefab: {fileID: 295606910664939439, guid: 306bfbc14adcf1444aa232b7424adc83, type: 3}
-    cost: 0
-    sellPrice: 0
-    level: 3
+  turretDatabase: {fileID: 11400000, guid: 24fc7bb2707d8ab43b1cb1281047ac97, type: 2}
 --- !u!114 &412852552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10086,19 +10070,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6975c376f3e0aa4499f6987c5802ec3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turretBlueprints:
-  - prefab: {fileID: 3923234855513613237, guid: a169dc42c9c1a4b41988980e30f45420, type: 3}
-    cost: 0
-    sellPrice: 0
-    level: 1
-  - prefab: {fileID: 7734932083412266000, guid: d7706138a0996c44aa11a8594121e48c, type: 3}
-    cost: 0
-    sellPrice: 0
-    level: 1
-  - prefab: {fileID: 1965688360123453324, guid: cc5e7cf25f6b1d04e81d7ba39c62cd3d, type: 3}
-    cost: 0
-    sellPrice: 0
-    level: 1
+  turretDatabase: {fileID: 11400000, guid: 24fc7bb2707d8ab43b1cb1281047ac97, type: 2}
   selectRandomButton: {fileID: 138386944}
   combineButton: {fileID: 1885944424}
   sellButton: {fileID: 1226229763}

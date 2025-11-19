@@ -15,7 +15,8 @@ public class TurretSetup : MonoBehaviour
         instance = this;
     }
 
-    public List<TurretBluePrint> turretBluePrints;
+    [Header("ScriptableObject Database")]
+    public TurretDatabase turretDatabase; // ScriptableObject 참조
 
     // 다음 레벨의 타워 블루프린트를 랜덤으로 반환하는 함수
     public TurretBluePrint GetRandomNextLevelTurret(int currentLevel)
@@ -23,7 +24,7 @@ public class TurretSetup : MonoBehaviour
         // 다음 레벨에 해당하는 모든 TurretBluePrint를 찾기
         List<TurretBluePrint> nextLevelTurrets = new List<TurretBluePrint>();
 
-        foreach (TurretBluePrint blueprint in turretBluePrints)
+        foreach (TurretBluePrint blueprint in turretDatabase.turretList)
         {
             if (blueprint.level == currentLevel + 1)
             {
@@ -46,11 +47,11 @@ public class TurretSetup : MonoBehaviour
     }
 
     // 같은 레벨과 같은 프리펩을 가진 블루프린트를 반환하는 함수
-    public List<TurretBluePrint> GetSameLevelAndPrefabBluePrints(TurretBluePrint blueprint)
+    public List<TurretBluePrint> GetSameLevelAndPrefabBlueprints(TurretBluePrint blueprint)
     {
         List<TurretBluePrint> matchingBlueprints = new List<TurretBluePrint>();
 
-        foreach (TurretBluePrint bp in turretBluePrints)
+        foreach (TurretBluePrint bp in turretDatabase.turretList)
         {
             if (bp.level == blueprint.level && bp.prefab == blueprint.prefab)
             {
